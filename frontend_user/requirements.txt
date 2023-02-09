@@ -1,0 +1,11 @@
+# frontend_user/requirements.txt
+
+streamlit==1.17.0
+fastapi
+numpy
+opencv-python
+pillow
+python-multipart
+uvicorn==0.20.0
+request==2.27.1
+uuid==1.2.0

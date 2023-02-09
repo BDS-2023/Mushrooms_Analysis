@@ -1,0 +1,1 @@
+DATA_PATH = ".common_storage/data/"
