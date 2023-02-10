@@ -170,6 +170,8 @@ df_images_name = df_images_name.drop(['id_x','id_y'],axis=1)
 
 df_images_name = df_images_name.drop_duplicates()
 df_images_name['source'] = 'MO'
+df_images_name['host'] = np.nan
+df_images_name['gbif_id'] = np.nan
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
