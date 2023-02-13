@@ -1,23 +1,24 @@
+# backend_dataprocessing/Dockerfile
 
 FROM python:3.10.1-slim
 
 WORKDIR /app
 
-RUN apt-get update
-RUN apt-get install \
-    'ffmpeg'\
-    'libsm6'\
-    'libxext6'  -y
-
 COPY requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip freeze > requirements.txt
 
-COPY . .
+ADD . .
 
-EXPOSE 8080
+EXPOSE 8502
 
-VOLUME [ "/common_storage/" ]
+VOLUME /volume_back_end
 
-CMD ["python", "main.py"]
+#ENV PATH=“${PATH}:/root/.local/bin
 
-#'ffmpeg', 'libsm6', and 'libxext6' are required for OpenCV.
+HEALTHCHECK CMD curl --fail http://localhost:8502/_stcore/health
+
+ENTRYPOINT ["run", "--server.port=8502"]
+
+CMD [ "main.py"]

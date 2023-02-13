@@ -9,3 +9,6 @@ uvicorn
 pandas
 request
 datetime
+tqdm
+sys
+uuid
