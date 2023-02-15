@@ -2,10 +2,9 @@
 
 
 import uuid
-#import cv2
-#import requests
+import cv2
+import requests
 import streamlit as st
-
 import config_user as cu
 
 LEVELS = {
@@ -33,6 +32,6 @@ if st.button("Start recognition"):
     if image is not None and level is not None:
         files = {"file": image.getvalue()}
         name = f"IMG_PATH/{str(uuid.uuid4())}.jpg"
-        #cv2.imwrite(name, files)
-        #res = requests.post(f"http://backend_classif:8082/{level}", files=files)
+        cv2.imwrite(name, files)
+        res = requests.post(f"http://backend_classif:8082/{level}", files=files)
         st.image(files, width=500)
