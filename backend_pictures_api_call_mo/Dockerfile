@@ -13,4 +13,5 @@ COPY . .
 
 VOLUME image_mo_container
 
+
 CMD ["python", "main.py"]
