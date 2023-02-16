@@ -61,7 +61,7 @@ path_temp = df.image_id.values
 urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
 
 
-for k in range(len(urls_all)):
+for k in range(100):
     try:
         uplo_from_url(urls_all[k])
     except:
