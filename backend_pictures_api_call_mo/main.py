@@ -9,8 +9,6 @@ import numpy as np
 
 print('hello1')
 
-ACCESS_KEY = 'AKIA3XYCSV3OU4IIGOAS'
-SECRET_KEY = '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'
 
 session = boto3.Session()
 s3 = session.resource(
