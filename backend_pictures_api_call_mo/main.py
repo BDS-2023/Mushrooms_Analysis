@@ -9,43 +9,44 @@ import numpy as np
 
 print('hello1')
 
-
-session = boto3.Session()
-s3 = session.resource('s3')
-
-
-my_bucket = s3.Bucket('imagemobucket')
-
-alr_in = []
-for objects in my_bucket.objects.filter(Prefix="image_mo/"):
-    try:
-        alr_in.append(int(str(objects.key).split('/')[-1][:-4]))
-    except:
-        pass
-
-alr_in = np.array(alr_in)
-
-print(alr_in)
-
-print('hello2')
-
-def uplo_from_url(url):
-    bucket_name = 'imagemobucket'
-    key_doss = 'image_mo/'
-    key = key_doss + url.split('/')[-1]
-    
-
-    req_for_image = requests.get(url, stream=True)
-    file_object_from_req = req_for_image.raw
-    req_data = file_object_from_req.read()
-
-    # Do the actual upload to s3
-    s3.Bucket(bucket_name).put_object(Key=key, Body=req_data)
-    
-    
-
-
 df = pd.read_csv('images_names.csv')
+
+# session = boto3.Session()
+# s3 = session.resource('s3')
+
+
+# my_bucket = s3.Bucket('imagemobucket')
+
+# alr_in = []
+# for objects in my_bucket.objects.filter(Prefix="image_mo/"):
+#     try:
+#         alr_in.append(int(str(objects.key).split('/')[-1][:-4]))
+#     except:
+#         pass
+
+# alr_in = np.array(alr_in)
+
+# print(alr_in)
+
+# print('hello2')
+
+# def uplo_from_url(url):
+#     bucket_name = 'imagemobucket'
+#     key_doss = 'image_mo/'
+#     key = key_doss + url.split('/')[-1]
+    
+
+#     req_for_image = requests.get(url, stream=True)
+#     file_object_from_req = req_for_image.raw
+#     req_data = file_object_from_req.read()
+
+#     # Do the actual upload to s3
+#     s3.Bucket(bucket_name).put_object(Key=key, Body=req_data)
+    
+    
+
+
+
 
 # df = df.drop_duplicates(subset='image_id')
 # df = df[~df.image_id.isin(alr_in)]
