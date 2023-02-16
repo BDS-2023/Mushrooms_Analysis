@@ -27,40 +27,40 @@ alr_in = np.array(alr_in)
 
 print(alr_in)
 
-# print('hello2')
+print('hello2')
 
-# def uplo_from_url(url):
-#     bucket_name = 'imagemobucket'
-#     key_doss = 'image_mo/'
-#     key = key_doss + url.split('/')[-1]
+def uplo_from_url(url):
+    bucket_name = 'imagemobucket'
+    key_doss = 'image_mo/'
+    key = key_doss + url.split('/')[-1]
     
 
-#     req_for_image = requests.get(url, stream=True)
-#     file_object_from_req = req_for_image.raw
-#     req_data = file_object_from_req.read()
+    req_for_image = requests.get(url, stream=True)
+    file_object_from_req = req_for_image.raw
+    req_data = file_object_from_req.read()
 
-#     # Do the actual upload to s3
-#     s3.Bucket(bucket_name).put_object(Key=key, Body=req_data)
+    # Do the actual upload to s3
+    s3.Bucket(bucket_name).put_object(Key=key, Body=req_data)
     
     
 
 
-# df = pd.read_csv('images_names.csv')
-# df = df.drop_duplicates(subset='image_id')
-# df = df[~df.image_id.isin(alr_in)]
+df = pd.read_csv('images_names.csv')
+df = df.drop_duplicates(subset='image_id')
+df = df[~df.image_id.isin(alr_in)]
 
-# print('hello3')
+print('hello3')
 
-# PATHs = 'https://images.mushroomobserver.org/320/'
-# path_temp = df.image_id.values
-# urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
+PATHs = 'https://images.mushroomobserver.org/320/'
+path_temp = df.image_id.values
+urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
 
 
-# # for k in range(100):
-# #     try:
-# #         uplo_from_url(urls_all[k])
-# #     except:
-# #         print('oups')
+for k in range(10):
+    try:
+        uplo_from_url(urls_all[k])
+    except:
+        print('oups')
 
 
 
