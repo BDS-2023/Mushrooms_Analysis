@@ -3,72 +3,71 @@ import requests
 import os
 import zipfile
 import time
-from pathlib import Path
-import shutil
+import boto3
+import time
+import numpy as np
 
-print('hello')
+print('hello1')
 
-# create a Path object with the path to the file
-path_file = Path('images_names.csv')
-path_volume_with_csv = Path('volume_backend/images_names.csv')
-path_volume_without_csv = Path('volume_backend')
-print(path_file)
-print(path_file.is_file())
+ACCESS_KEY = 'AKIA3XYCSV3OU4IIGOAS'
+SECRET_KEY = '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'
 
-def move_file(path_file):
-    """path could either be relative or absolute. """
-    # check if file or directory exists
-    if path_file.is_file() or path_file.is_file():
-        # move file
-        shutil.move(path_file, path_volume_without_csv)
-    else:
-        raise ValueError("Path {} is not a file or dir.".format(path_file))
+session = boto3.Session()
+s3 = session.resource(
+    's3',
+    aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET_KEY,
+)
 
 
-# def delete_file(path_file):
-#     """path could either be relative or absolute. """
-#     # check if file or directory exists
-#     if path_file.is_file():
-#         # remove file
-#         os.remove(path_file)
-#     elif path_file.is_file():
-#         # remove directory and all its content
-#         shutil.rmtree(path_file)
-#     else:
-#         raise ValueError("Path {} is not a file or dir.".format(path_file))
+my_bucket = s3.Bucket('imagemobucket')
+
+alr_in = []
+for objects in my_bucket.objects.filter(Prefix="image_mo/"):
+    try:
+        alr_in.append(int(str(objects.key).split('/')[-1][:-4]))
+    except:
+        pass
+
+alr_in = np.array(alr_in)
 
 
-if path_file.is_file() == True:
-    move_file(path_file)
-    # delete_file(path_file)
-    print('CSV moved in volume')
-elif path_volume_with_csv.is_file() == True:
-    print('CSV present in the volume')
-else : raise ValueError('CSV file is absent from build repertory (host machine) or volume : images_names.csv')
+print('hello2')
+
+def uplo_from_url(url):
+    bucket_name = 'imagemobucket'
+    key_doss = 'image_mo/'
+    key = key_doss + url.split('/')[-1]
+    
+
+    req_for_image = requests.get(url, stream=True)
+    file_object_from_req = req_for_image.raw
+    req_data = file_object_from_req.read()
+
+    # Do the actual upload to s3
+    s3.Bucket(bucket_name).put_object(Key=key, Body=req_data)
+    
+    
 
 
-df = pd.read_csv('volume_backend/images_names.csv')
+df = pd.read_csv('images_names.csv')
+df = df.drop_duplicates(subset='image_id')
+df = df[~df.image_id.isin(alr_in)]
 
-df = df.sample(200)
+print('hello3')
 
 PATHs = 'https://images.mushroomobserver.org/320/'
-
-path_temp_id = df.image_id.values
-names = ['{0}.jpg'.format(path_temp_ids) for path_temp_ids in path_temp_id]
-
-urls = [PATHs+'{0}.jpg'.format(path) for path in path_temp_id]
+path_temp = df.image_id.values
+urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
 
 
-start_time = time.time()
-with zipfile.ZipFile(str(path_volume_without_csv)+'/Images_MO.zip', 'w') as img_zip:
-    for image_url,name in zip(urls,names):
-        img_name = name
-        img_data = requests.get(image_url).content
-        img_zip.writestr(img_name, img_data)
-        
-et = time.time()
+for k in range(len(urls_all)):
+    try:
+        uplo_from_url(urls_all[k])
+    except:
+        print('oups')
 
-print('execution time',et-start_time)
+
 
 
 # docker image build . -t my_image:latest

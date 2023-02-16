@@ -11,7 +11,5 @@ COPY . .
 
 # EXPOSE 8080
 
-VOLUME volume_backend
-
 
 CMD ["python", "main.py"]
