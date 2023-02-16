@@ -9,28 +9,29 @@ import numpy as np
 
 print('hello1')
 
-# ACCESS_KEY = 'AKIA3XYCSV3OU4IIGOAS'
-# SECRET_KEY = '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'
+ACCESS_KEY = 'AKIA3XYCSV3OU4IIGOAS'
+SECRET_KEY = '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'
 
-# session = boto3.Session()
-# s3 = session.resource(
-#     's3',
-#     aws_access_key_id=ACCESS_KEY,
-#     aws_secret_access_key=SECRET_KEY,
-# )
+session = boto3.Session()
+s3 = session.resource(
+    's3',
+    aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET_KEY,
+)
 
 
-# my_bucket = s3.Bucket('imagemobucket')
+my_bucket = s3.Bucket('imagemobucket')
 
-# alr_in = []
-# for objects in my_bucket.objects.filter(Prefix="image_mo/"):
-#     try:
-#         alr_in.append(int(str(objects.key).split('/')[-1][:-4]))
-#     except:
-#         pass
+alr_in = []
+for objects in my_bucket.objects.filter(Prefix="image_mo/"):
+    try:
+        alr_in.append(int(str(objects.key).split('/')[-1][:-4]))
+    except:
+        pass
 
-# alr_in = np.array(alr_in)
+alr_in = np.array(alr_in)
 
+print(alr_in)
 
 # print('hello2')
 
