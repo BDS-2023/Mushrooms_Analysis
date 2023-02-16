@@ -11,11 +11,7 @@ print('hello1')
 
 
 session = boto3.Session()
-s3 = session.resource(
-    's3',
-    aws_access_key_id=ACCESS_KEY,
-    aws_secret_access_key=SECRET_KEY,
-)
+s3 = session.resource('s3')
 
 
 my_bucket = s3.Bucket('imagemobucket')
