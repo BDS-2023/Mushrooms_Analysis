@@ -45,17 +45,17 @@ def uplo_from_url(url):
     
 
 
-df = pd.read_csv('images_names.csv')
-df = df.drop_duplicates(subset='image_id')
-df = df[~df.image_id.isin(alr_in)]
+# df = pd.read_csv('images_names.csv')
+# df = df.drop_duplicates(subset='image_id')
+# df = df[~df.image_id.isin(alr_in)]
 
-print('hello3')
+# print('hello3')
 
-PATHs = 'https://images.mushroomobserver.org/320/'
-path_temp = df.image_id.values
-urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
+# PATHs = 'https://images.mushroomobserver.org/320/'
+# path_temp = df.image_id.values
+# urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
 
-print('hello4')
+# print('hello4')
 
 # for k in range(10):
 #     try:
