@@ -7,40 +7,42 @@ from pathlib import Path
 import shutil
 
 print('hello')
-# df = pd.read_csv('/var/lib/docker/volumes/Image_MO/_data/images_names.csv')
 
 # create a Path object with the path to the file
 path_file = Path('images_names.csv')
-path_volume = 'volume_backend'
+path_volume_with_csv = Path('volume_backend/images_names.csv')
+path_volume_without_csv = Path('volume_backend')
+print(path_file)
+print(path_file.is_file())
 
-
-def move_file(path):
+def move_file(path_file):
     """path could either be relative or absolute. """
     # check if file or directory exists
-    if os.path.isfile(path) or os.path.islink(path) or os.path.isdir(path):
+    if path_file.is_file() or path_file.is_file():
         # move file
-        shutil.move(path, path_volume)
+        shutil.move(path_file, path_volume_without_csv)
     else:
-        raise ValueError("Path {} is not a file or dir.".format(path))
+        raise ValueError("Path {} is not a file or dir.".format(path_file))
 
 
-def delete_file(path):
-    """path could either be relative or absolute. """
-    # check if file or directory exists
-    if os.path.isfile(path) or os.path.islink(path):
-        # remove file
-        os.remove(path)
-    elif os.path.isdir(path):
-        # remove directory and all its content
-        shutil.rmtree(path)
-    else:
-        raise ValueError("Path {} is not a file or dir.".format(path))
+# def delete_file(path_file):
+#     """path could either be relative or absolute. """
+#     # check if file or directory exists
+#     if path_file.is_file():
+#         # remove file
+#         os.remove(path_file)
+#     elif path_file.is_file():
+#         # remove directory and all its content
+#         shutil.rmtree(path_file)
+#     else:
+#         raise ValueError("Path {} is not a file or dir.".format(path_file))
 
 
-if os.path.isfile(path_file) == True:
+if path_file.is_file() == True:
     move_file(path_file)
-    delete_file(path_file)
-elif os.path.isfile(path_volume/path_file) == True:
+    # delete_file(path_file)
+    print('CSV moved in volume')
+elif path_volume_with_csv.is_file() == True:
     print('CSV present in the volume')
 else : raise ValueError('CSV file is absent from build repertory (host machine) or volume : images_names.csv')
 
@@ -58,7 +60,7 @@ urls = [PATHs+'{0}.jpg'.format(path) for path in path_temp_id]
 
 
 start_time = time.time()
-with zipfile.ZipFile('image_mo_container/Images_MO.zip', 'w') as img_zip:
+with zipfile.ZipFile(str(path_volume_without_csv)+'/Images_MO.zip', 'w') as img_zip:
     for image_url,name in zip(urls,names):
         img_name = name
         img_data = requests.get(image_url).content

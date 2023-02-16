@@ -11,7 +11,7 @@ COPY . .
 
 # EXPOSE 8080
 
-VOLUME image_mo_container
+VOLUME volume_backend
 
 
 CMD ["python", "main.py"]
