@@ -9,7 +9,7 @@ import numpy as np
 
 print('hello1')
 
-df = pd.read_csv('images_names.csv')
+df = pd.read_csv('images_names.csv',usecols=['image_id'],index_col=0)
 
 # session = boto3.Session()
 # s3 = session.resource('s3')
