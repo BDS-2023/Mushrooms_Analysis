@@ -56,7 +56,7 @@ PATHs = 'https://images.mushroomobserver.org/320/'
 
 # print('hello4')
 
-for k in range(10):
+for k in range(1000):
     try:
         uplo_from_url(PATHs+'{0}.jpg'.format(df.index.values[k]))
     except:
