@@ -50,7 +50,7 @@ df = df[~df.index.isin(alr_in)]
 print('hello3')
 
 PATHs = 'https://images.mushroomobserver.org/320/'
-path_temp = df.image_id.values
+path_temp = df.index.values
 urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
 
 # print('hello4')
