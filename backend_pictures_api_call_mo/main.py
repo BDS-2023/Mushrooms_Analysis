@@ -17,16 +17,16 @@ s3 = session.resource('s3')
 
 my_bucket = s3.Bucket('imagemobucket')
 
-alr_in = []
-for objects in my_bucket.objects.filter(Prefix="image_mo/"):
-    try:
-        alr_in.append(int(str(objects.key).split('/')[-1][:-4]))
-    except:
-        pass
+# alr_in = []
+# for objects in my_bucket.objects.filter(Prefix="image_mo/"):
+#     try:
+#         alr_in.append(int(str(objects.key).split('/')[-1][:-4]))
+#     except:
+#         pass
 
-alr_in = np.array(alr_in)
+# alr_in = np.array(alr_in)
 
-print(alr_in)
+# print(alr_in)
 
 print('hello2')
 
@@ -45,19 +45,20 @@ def uplo_from_url(url):
     
 
 
-df = df[~df.index.isin(alr_in)]
+# df = df[~df.index.isin(alr_in)]
 
 print('hello3')
 
 PATHs = 'https://images.mushroomobserver.org/320/'
-path_temp = df.index.values
-urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
+
+# path_temp = df.index.values
+# urls_all = [PATHs+'{0}.jpg'.format(path) for path in path_temp]
 
 # print('hello4')
 
 for k in range(10):
     try:
-        uplo_from_url(urls_all[k])
+        uplo_from_url(PATHs+'{0}.jpg'.format(df.index.values[k]))
     except:
         print('oups')
 
